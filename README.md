@@ -1,6 +1,6 @@
 # vue-multipage-wechart
 
-> vue-cli多页面配置之移动端
+> vue-cli多页面配置之移动端 + vux-ui
 
 ## 构建步骤
 
