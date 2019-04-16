@@ -6,7 +6,6 @@ const merge = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
@@ -61,24 +60,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     ])
   ]
 })
-
-const pages = utils.getEntries('./src/module/**/*.html')
-const baseTitle = ' - 及时油'
-for(let page in pages) {
-  let title = utils.getTitle(page)
-  // 配置生成的html文件，定义路径等
-  let conf = {
-    filename: page + '.html',
-    template: pages[page], //模板路径
-    title: title + baseTitle,
-    favicon: './favicon.ico',
-    inject: true,
-    excludeChunks: Object.keys(pages).filter(item => {
-      return (item != page)
-    })
-  }
-  devWebpackConfig.plugins.push(new HtmlWebpackPlugin(conf))
-}
 
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port

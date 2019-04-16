@@ -1,37 +1,6 @@
-<<<<<<< HEAD
-# vue-cli3-multipage
+# vue-cli2-multipage
 
-> 一个基于vue-cli3构建的多页面项目
-
-## 项目改造步骤
-> [vue-cli3多页面项目构建]()
-
-## 构建步骤
-```
-npm install
-```
-
-### 开发环境
-```
-npm run serve
-```
-
-### 生产环境
-```
-npm run build
-```
-
-### 整理和修复文件
-```
-npm run lint
-```
-
-### 自定义配置
-> [自定义配置](https://cli.vuejs.org/config/)
-=======
-# vue-multipage-wechart
-
-> vue-cli多页面配置之移动端
+> 一个基于vue-cli2构建的多页面项目
 
 ## 构建步骤
 
@@ -131,4 +100,3 @@ npm run lint
 	+ 最后改造config/index.js
 
 
->>>>>>> vue-cli多页面改造完成

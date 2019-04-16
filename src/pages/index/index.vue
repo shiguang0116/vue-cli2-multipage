@@ -1,35 +1,8 @@
 <template>
-<<<<<<< HEAD
-    <div>
-        <h1>首页</h1>
-        <a href="shop.html">jump to shop.html</a>
-
-        <div>
-            <img alt="Vue logo" src="@/assets/logo.png">
-            <HelloWorld msg="HelloWorld组件"/>
-        </div>
-    </div>
-</template>
-
-<script>
-    import HelloWorld from '@/components/HelloWorld.vue'
-
-    export default {
-        name: "index",
-        components: {
-            HelloWorld
-        }
-    }
-</script>
-
-<style scoped>
-
-</style>
-=======
 	<div>
 		<img src="../../images/logo.png" height="200" width="200" alt="">
-		<h1>This is index.vue</h1>
-		<a href="/about.html">jump to about</a>
+		<h1>首页</h1>
+		<a href="shop.html">jump to shop</a>
 		<!-- layout -->
 		<div class="row row-middle row-around">
 			<p class="h" style="background-color: red">111</p>
@@ -79,5 +52,3 @@ export default {
 <style lang="less" scoped>
 	
 </style>
-
->>>>>>> vue-cli多页面改造完成

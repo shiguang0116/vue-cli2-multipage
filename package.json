@@ -1,63 +1,14 @@
 {
-<<<<<<< HEAD
-  "name": "vue-cli3",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "core-js": "^2.6.5",
-    "vue": "^2.6.6"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
-    "babel-eslint": "^10.0.1",
-    "colors": "^1.3.3",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "glob": "^7.1.3",
-    "less": "^3.9.0",
-    "less-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.21"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-=======
-  "name": "vue-multipage-demo",
+  "name": "vue-cli2-multipage",
   "version": "1.0.0",
-  "description": "vue-cli多页面配置",
-  "author": "shiguang0116 <466186029@qq.com>",
+  "description": "一个基于vue-cli2构建的多页面项目",
+  "author": "guang.shi <shiguang0116@163.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "unit": "jest --config test/unit/jest.conf.js --coverage",
-    "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js",
-    "stop": "taskkill /f /t /im node.exe"
+    "build": "node build/build.js"
   },
   "dependencies": {
     "mint-ui": "^2.2.13",
@@ -130,7 +81,6 @@
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
->>>>>>> vue-cli多页面改造完成
   },
   "browserslist": [
     "> 1%",

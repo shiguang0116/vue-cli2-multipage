@@ -6,7 +6,6 @@ const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -88,8 +87,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     // see: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk
     new webpack.optimize.CommonsChunkPlugin({
       name: 'app',
-      // async: 'vendor-async',
-      // children: true,
+      async: 'vendor-async',
+      children: true,
       minChunks: 3
     }),
 
@@ -128,21 +127,3 @@ if (config.build.bundleAnalyzerReport) {
 }
 
 module.exports = webpackConfig
-
-const pages = utils.getEntries('./src/module/**/*.html')
-const baseTitle = ' - 及时油'
-for(let page in pages) {
-  let title = utils.getTitle(page)
-  // 配置生成的html文件，定义路径等
-  let conf = {
-    filename: page + '.html',
-    template: pages[page], //模板路径
-    title: title + baseTitle,
-    favicon: './favicon.ico',
-    inject: true,
-    excludeChunks: Object.keys(pages).filter(item => {
-      return (item != page)
-    })
-  }
-  module.exports.plugins.push(new HtmlWebpackPlugin(conf))
-}

@@ -2,11 +2,10 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-// const utils = require('../build/utils')
-const glob = require('glob')
 const path = require('path')
+const glob = require('glob')
 
-let config = {
+const config = {
   dev: {
     // Paths
     assetsSubDirectory: 'static',
@@ -75,19 +74,11 @@ let config = {
   }
 }
 
-function getEntries(globPath) {
-  let entries = {}
-  glob.sync(globPath).forEach(function (entry) {
-    let tmp = entry.split('/').slice(-3)
-    let moduleName = tmp.slice(1, 2)[0];
-    entries[moduleName] = entry
-  });
-  return entries;
-}
-const pages = getEntries('./src/module/**/*.html')
-// const pages = utils.getEntries('./src/module/**/*.html')
-for (let pathname in pages) {
-  config.build[pathname] = path.resolve(__dirname, '../dist/' + pathname + '.html')
-}
+// 构建多页面
+glob.sync('./src/pages/**/*.vue').forEach(function (entry) {
+  const ext = path.extname(entry);
+  const moduleName = path.basename(entry, ext);
+  config.build[moduleName] = path.resolve(__dirname, '../dist/' + moduleName + '.html');
+});
 
-module.exports = config
+module.exports = config;

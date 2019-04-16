@@ -3,6 +3,8 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const fs = require('fs')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -19,10 +21,10 @@ const createLintingRule = () => ({
   }
 })
 
-const webpackConfig = {
+const baseWebpackConfig = {
   context: path.resolve(__dirname, '../'),
-  entry: Object.assign(utils.getEntries('./src/module/**/*.js'), {
-    'app': './src/main.js'
+  entry: Object.assign(getEntries(), {
+    app: './src/main.js'
   }),
   output: {
     path: config.build.assetsRoot,
@@ -35,13 +37,7 @@ const webpackConfig = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': path.resolve(__dirname, '../src'),
-      'images': path.resolve(__dirname, '../src/images'),
-      'styles': path.resolve(__dirname, '../src/styles'),
-      'common': path.resolve(__dirname, '../src/common'),
-      'components': path.resolve(__dirname, '../src/components'),
-      'pages': path.resolve(__dirname, '../src/pages'),
-      'utils': path.resolve(__dirname, '../src/utils')
+      '@': resolve('src')
     }
   },
   module: {
@@ -97,8 +93,54 @@ const webpackConfig = {
   }
 }
 
+// 处理入口文件
+function getEntries(){
+  // 生成入口文件
+  const pages = utils.getEntries('./src/pages/**/*.vue');
+  for(let pageCode in pages) {
+    const entryFile = `./entry/${pageCode}.js`;
+    fs.exists(entryFile, function (exists) {
+      if (exists) return;
+      const appTpl = '.' + pages[pageCode];
+      const entryData = ` import Vue from 'vue';\n import App from '${appTpl}';\n Vue.config.productionTip = false;\n new Vue({ el: '#${pageCode}', components: { App }, template: '<App/>' }); `;
+      fs.writeFile(entryFile, entryData, function (err) {
+        if (err) console.log(err);
+      });
+    });
+  }
+  // 获取入口文件数据
+  const entries = utils.getEntries('./entry/*.js');
+  return entries;
+}
+
+// 构建多页面
+const pagesJson = require('../config/page.json');
+const pages = utils.getEntries('./src/pages/**/*.vue');
+
+for(let pageCode in pages) {
+  // 自定义页面数据
+  const pageData = pagesJson[pageCode] || {};
+  Object.assign(pageData, {
+    url: pages[pageCode],
+    code: pageCode
+  });
+  // 配置生成的html文件
+  const conf = {
+    filename: pageCode + '.html',
+    template: './index.html', // 模板路径
+    favicon: './favicon.ico',
+    inject: true,
+    // minify: process.env.NODE_ENV === 'production' ? true : false,
+    chunks: ['manifest', 'vendor', 'app', pageCode],   // 引入资源文件
+    chunksSortMode: 'manual',       // 控制 chunk 的排序。none | auto（默认）| dependency（依赖）| manual（手动）| {function}
+    pageData: pageData
+  };
+  if(!baseWebpackConfig.plugins) baseWebpackConfig.plugins = [];
+  baseWebpackConfig.plugins.push(new HtmlWebpackPlugin(conf));
+}
+
 // vux-ui
-const vuxLoader = require('vux-loader')
-module.exports = vuxLoader.merge(webpackConfig, {
+const vuxLoader = require('vux-loader');
+module.exports = vuxLoader.merge(baseWebpackConfig, {
   plugins: ['vux-ui']
-})
+});
