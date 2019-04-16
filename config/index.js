@@ -8,7 +8,7 @@ const glob = require('glob')
 const config = {
   dev: {
     // Paths
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: '',
     assetsPublicPath: '/',
     proxyTable: {},
 
@@ -48,7 +48,7 @@ const config = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: '',
     assetsPublicPath: '/',
 
     /**
