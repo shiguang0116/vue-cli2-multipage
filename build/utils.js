@@ -1,9 +1,10 @@
 'use strict'
-const glob = require('glob')
 const path = require('path')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
+const glob = require('glob')
+const colors = require('colors');
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -101,18 +102,19 @@ exports.createNotifierCallback = () => {
   }
 }
 
-exports.getEntries = function (globPath) {
-  let entries = {}
+// 构建多页面（获取文件名以及对应路径）
+exports.getModules = function (globPath) {
+  let modules = {}
   // 读取src目录,并进行路径裁剪
-  glob.sync(globPath).forEach(function (entry) {
-    const ext = path.extname(entry);
-    const moduleName = path.basename(entry, ext);
+  glob.sync(globPath).forEach(function (url) {
+    const ext = path.extname(url);  // 获取文件后缀
+    const moduleName = path.basename(url, ext); // 获取文件名
     // 文件名不能重复的验证（pageCode 在这里取的是文件名）
-    if (entries[moduleName]) {
-      // console.error(colors.red(`文件名不能重复使用：${pageCode}。\n`));
+    if (modules[moduleName]) {
+      console.error(colors.red(`文件名不能重复使用：${pageCode}。\n`));
       process.exit(1);
     }
-    entries[moduleName] = entry
+    modules[moduleName] = url
   });
-  return entries;
+  return modules;
 }

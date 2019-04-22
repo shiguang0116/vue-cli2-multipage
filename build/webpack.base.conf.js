@@ -95,11 +95,12 @@ const baseWebpackConfig = {
 
 // 处理入口文件
 function getEntries(){
+  const entries = {};
   // 生成入口文件
-  const pages = utils.getEntries('./src/pages/**/*.vue');
+  const pages = utils.getModules('./src/pages/**/*.vue');
   for(let pageCode in pages) {
     const entryFile = `./entry/${pageCode}.js`;
-    fs.exists(entryFile, function (exists) {
+    fs.exists(entryFile, function (exists) {  // 这里没有对文件目录进行判断，所以需要先建一个'entry'文件夹，否则会报错
       if (exists) return;
       const appTpl = '.' + pages[pageCode];
       const entryData = ` import Vue from 'vue';\n import App from '${appTpl}';\n Vue.config.productionTip = false;\n new Vue({ el: '#${pageCode}', components: { App }, template: '<App/>' }); `;
@@ -107,15 +108,16 @@ function getEntries(){
         if (err) console.log(err);
       });
     });
+    // 获取入口文件数据
+    entries[pageCode] = entryFile;
   }
-  // 获取入口文件数据
-  const entries = utils.getEntries('./entry/*.js');
+  // const entries = utils.getModules('./entry/*.js');
   return entries;
 }
 
 // 构建多页面
 const pagesJson = require('../config/page.json');
-const pages = utils.getEntries('./src/pages/**/*.vue');
+const pages = utils.getModules('./src/pages/**/*.vue');
 
 for(let pageCode in pages) {
   // 自定义页面数据
@@ -130,7 +132,6 @@ for(let pageCode in pages) {
     template: './index.html', // 模板路径
     favicon: './favicon.ico',
     inject: true,
-    // minify: process.env.NODE_ENV === 'production' ? true : false,
     chunks: ['manifest', 'vendor', 'app', pageCode],   // 引入资源文件
     chunksSortMode: 'manual',       // 控制 chunk 的排序。none | auto（默认）| dependency（依赖）| manual（手动）| {function}
     pageData: pageData

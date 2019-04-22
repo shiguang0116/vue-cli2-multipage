@@ -3,7 +3,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const glob = require('glob')
 
 const config = {
   dev: {
@@ -73,12 +72,5 @@ const config = {
     bundleAnalyzerReport: process.env.npm_config_report
   }
 }
-
-// 构建多页面
-glob.sync('./src/pages/**/*.vue').forEach(function (entry) {
-  const ext = path.extname(entry);
-  const moduleName = path.basename(entry, ext);
-  config.build[moduleName] = path.resolve(__dirname, '../dist/' + moduleName + '.html');
-});
 
 module.exports = config;
