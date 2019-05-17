@@ -1,22 +1,22 @@
-<% 
-    const page = htmlWebpackPlugin.options.pageData; 
+<%
+  const page = htmlWebpackPlugin.options.pageData;
 %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= page.title %> - multi page2</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= page.title %> - multi page2</title>
 </head>
 
 <body>
-    <div id="app">
-        <div id="<%= page.code %>"></div>
-    </div>
-    <!-- 生成的文件将自动注入 -->
+  <div id="app">
+    <div id="<%= page.code %>"></div>
+  </div>
+  <!-- 生成的文件将自动注入 -->
 </body>
 
 </html>

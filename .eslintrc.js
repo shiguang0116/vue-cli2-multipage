@@ -27,6 +27,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // Unexpected tab character
     "no-tabs":"off",
-    "indent":[0,4]
+    "indent":[2,4]
   }
 }
