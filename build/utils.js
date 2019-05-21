@@ -4,7 +4,7 @@ const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
 const glob = require('glob')
-const colors = require('colors')
+const colors = require('colors-console')
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -111,7 +111,7 @@ exports.getModules = function (globPath) {
     const moduleName = path.basename(url, ext); // 获取文件名
     // 文件名不能重复的验证（moduleName 在这里取的是文件名）
     if (modules[moduleName]) {
-      console.error(colors.red(`文件名不能重复使用：${moduleName}。\n`));
+      console.error(colors('red', `文件名不能重复使用：${moduleName}。\n`));
       process.exit(1);
     }
     modules[moduleName] = url
